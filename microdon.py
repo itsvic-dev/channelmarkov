@@ -40,6 +40,9 @@ class MastodonOAuth2:
 
         resp = requests.post(f"{self.instance}/oauth/token", headers=headers, data=data)
 
+        if resp.status_code != 200:
+            raise Exception(f"Failed to log in: {resp.status_code} ({resp.text})")
+
         json = resp.json()
         self.access_token = json["access_token"]
 
