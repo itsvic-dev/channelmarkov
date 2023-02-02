@@ -9,7 +9,7 @@ datasets = config.YOUTUBER_DATASETS
 markov_models = {}
 
 for key, value in datasets.items():
-    with open("data/f{value}.txt") as file:
+    with open(f"data/{value}.txt") as file:
         markov_models[key] = markovify.NewlineText(file.read()).compile(inplace=True)
 
 if False:  # disable merged datasets since they make no sense here
