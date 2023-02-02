@@ -2,7 +2,7 @@
 import markovify
 import random
 import time
-import microtwitter
+import microdon
 import config
 
 datasets = config.WINTUBER_DATASETS
@@ -35,13 +35,13 @@ def get_random_quote():
         return None
     return key, quote
 
-twitter = microtwitter.TwitterOAuth2("wintuber", config.OAUTH_CLIENT_ID, config.OAUTH_CLIENT_SECRET)
+client = microdon.MastodonOAuth2("wintuber", config.MASTODON_INSTANCE, config.OAUTH_CLIENT_ID, config.OAUTH_CLIENT_SECRET)
 
 while True:
-    twitter.check_auth()
+    client.check_auth()
     quote = None
     while quote is None:
         quote = get_random_quote()
-    twitter.send_tweet(f"{quote[1]}\nby {quote[0]}")
+    client.send_toot(f"{quote[1]}\nby {quote[0]}\n\n#markov")
     print(quote[0], "->", quote[1])
     time.sleep(1 * 60 * 30)  # 30 minutes
